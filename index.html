@@ -67,9 +67,9 @@
         /* Auth UI Elements */
         .auth-container { display: flex; align-items: center; gap: 15px; }
         #user-info-nav { display: none; align-items: center; gap: 10px; }
-        #user-avatar-small { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); }
-        #logout-btn { border: none; padding: 0; font-size: 0.7rem; margin-left: 10px; }
-        #logout-btn:hover { background: transparent; color: #ff4444; box-shadow: none; }
+        #user-avatar-small { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); object-fit: cover; }
+        #logout-btn { border: none; padding: 0; font-size: 0.7rem; margin-left: 10px; color: #888; background: transparent; }
+        #logout-btn:hover { color: #ff4444; box-shadow: none; }
 
         /* Mobile Hamburger */
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
@@ -130,11 +130,17 @@
             margin-top: 20px; font-family: 'Courier New', monospace; font-size: 0.9rem;
         }
 
+        /* Quiz Styles */
+        .quiz-container { background: #0f0f0f; padding: 20px; border: 1px solid #333; margin-top: 20px; }
+        .quiz-option { margin: 10px 0; display: block; cursor: pointer; }
+        .quiz-option:hover { color: var(--gold); }
+
+        /* Profile Styles */
         .profile-card {
             text-align: center; background: var(--charcoal); padding: 40px; 
             border: 1px solid #333; max-width: 500px; margin: 0 auto;
         }
-        .profile-avatar-large { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 20px; }
+        .profile-avatar-large { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 20px; object-fit: cover; }
         .data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; font-size: 0.9rem; }
         
         /* Mobile */
@@ -160,6 +166,7 @@
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#stats">Statistics</a></li>
                 <li><a href="#apa">APA Citation</a></li>
+                <li><a href="#dev">Web Dev</a></li>
                 <li><a href="#profile">Profile</a></li>
                 
                 <li class="auth-container">
@@ -199,16 +206,35 @@
                 <button class="tab-btn active" onclick="openTab('stats-unit1', 'stats')">Unit 1: Review</button>
                 <button class="tab-btn" onclick="openTab('stats-unit2', 'stats')">Unit 2: Regression</button>
             </div>
+
             <div id="stats-unit1" class="tab-content active stats-content">
                 <div class="module-card">
                     <div class="module-meta"><span>Module 1.1</span><span>Difficulty: Intermediate</span></div>
-                    <h3>Descriptive Statistics & Probability Distributions</h3>
-                    <p>Understanding the shape of data is the precursor to inference. We examine the Normal Distribution, Skewness, and Kurtosis.</p>
+                    <h3>Descriptive Statistics & Probability</h3>
+                    <p style="margin: 20px 0;">Understanding the shape of data is the precursor to inference. We examine the Normal Distribution, Skewness, and Kurtosis within the context of large datasets.</p>
+                    
+                    <div style="background: #000; padding: 15px; border-left: 2px solid var(--gold); font-family: 'Times New Roman', serif; font-style: italic;">
+                        $$ \sigma = \sqrt{\frac{\sum(x_i - \mu)^2}{N}} $$
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <h4 class="gold-text">Proficiency Check</h4>
+                    <p>Which theorem states that the sampling distribution of the sample mean approaches a normal distribution as the sample size gets larger?</p>
+                    <div id="quiz-stats-1">
+                        <label class="quiz-option"><input type="radio" name="q1" value="0"> Chebyshev's Theorem</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="1"> Central Limit Theorem</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="0"> Law of Large Numbers</label>
+                    </div>
+                    <button class="btn" style="margin-top: 20px;" onclick="submitQuiz('stats-1')">Check Answer</button>
+                    <div id="result-stats-1" style="margin-top: 10px;"></div>
                 </div>
             </div>
+
             <div id="stats-unit2" class="tab-content stats-content">
                 <div class="module-card">
                     <h3>Linear & Multiple Regression</h3>
+                    <p>Modeling relationships between dependent and independent variables. Includes ANOVA interpretation.</p>
                     <p><em>Please sign in to access advanced modules.</em></p>
                 </div>
             </div>
@@ -221,21 +247,93 @@
                 <h2>APA 7th Generator</h2>
                 <p>Research Integrity & Attribution</p>
             </div>
+
             <div class="tool-grid">
                 <div>
-                    <div class="input-group"><label>Author</label><input type="text" id="apa-author" placeholder="Doe, J. A."></div>
-                    <div class="input-group"><label>Year</label><input type="text" id="apa-year" placeholder="2023"></div>
-                    <div class="input-group"><label>Title</label><input type="text" id="apa-title" placeholder="Title of the work"></div>
+                    <h3 style="margin-bottom: 20px;">Citation Generator</h3>
+                    <div class="input-group">
+                        <label>Source Type</label>
+                        <select id="apa-type">
+                            <option value="journal">Journal Article</option>
+                            <option value="book">Book</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Author (Last, F. M.)</label>
+                        <input type="text" id="apa-author" placeholder="Doe, J. A.">
+                    </div>
+                    <div class="input-group">
+                        <label>Year</label>
+                        <input type="text" id="apa-year" placeholder="2023">
+                    </div>
+                    <div class="input-group">
+                        <label>Title</label>
+                        <input type="text" id="apa-title" placeholder="Title of the work">
+                    </div>
+                    <div class="input-group">
+                        <label>Source (Journal/Publisher)</label>
+                        <input type="text" id="apa-source" placeholder="Journal of Statistics">
+                    </div>
                     <button class="btn" onclick="generateAPA()">Generate Citation</button>
                 </div>
+
                 <div>
-                    <div class="result-box" id="apa-output">Waiting for input...</div>
+                    <h3 style="margin-bottom: 20px;">Output Preview</h3>
+                    <div class="result-box" id="apa-output">
+                        Waiting for input...
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="profile">
+    <section id="dev">
+        <div class="container">
+            <div class="section-header">
+                <h2>Intermediate Web Dev</h2>
+                <p>HTML5, CSS3, & ES6+ JavaScript</p>
+            </div>
+
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="openTab('dev-unit1', 'dev')">Code Playground</button>
+                <button class="tab-btn" onclick="openTab('dev-unit2', 'dev')">Syllabus</button>
+            </div>
+
+            <div id="dev-unit1" class="tab-content active dev-content">
+                <div class="tool-grid">
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Editor</h3>
+                        <div class="input-group">
+                            <label>HTML</label>
+                            <textarea id="code-html" rows="4">&lt;h1&gt;Hello World&lt;/h1&gt;</textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>CSS</label>
+                            <textarea id="code-css" rows="4">h1 { color: #C5A059; font-family: sans-serif; }</textarea>
+                        </div>
+                        <button class="btn" onclick="runCode()">Run Code</button>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Live Preview</h3>
+                        <iframe id="code-preview" style="width: 100%; height: 300px; background: #fff; border: 1px solid var(--gold);"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="dev-unit2" class="tab-content dev-content">
+                <div class="module-card">
+                    <h3>Curriculum Overview</h3>
+                    <ul style="list-style: inside; color: #ccc;">
+                        <li>Unit 1: Semantic HTML & Accessibility</li>
+                        <li>Unit 2: CSS Grid & Flexbox Mastery</li>
+                        <li>Unit 3: ES6+ JavaScript (Arrow functions, Promises)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="profile" style="background: #0f0f0f;">
         <div class="container">
             <div class="section-header">
                 <h2>Student Profile</h2>
@@ -254,7 +352,7 @@
     </footer>
 
     <script>
-        // 1. UI LOGIC (Typewriter, Tabs, APA)
+        // 1. TYPEWRITER EFFECT
         const words = ["Statistics.", "Citations.", "Web Development."];
         let i = 0;
         function typeWriter() {
@@ -266,13 +364,14 @@
         }
         typeWriter();
 
+        // 2. NAVIGATION SCROLL
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        // Hamburger
+        // 3. HAMBURGER MENU
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
         if(hamburger) {
@@ -282,6 +381,7 @@
             });
         }
 
+        // 4. TAB LOGIC
         window.openTab = function(id, groupClass) {
             const contents = document.getElementsByClassName(groupClass + '-content');
             for (let content of contents) content.classList.remove('active');
@@ -292,42 +392,71 @@
             activeBtn.classList.add('active');
         }
 
+        // 5. APA GENERATOR LOGIC
         window.generateAPA = function() {
+            const type = document.getElementById('apa-type').value;
             const author = document.getElementById('apa-author').value;
             const year = document.getElementById('apa-year').value;
             const title = document.getElementById('apa-title').value;
-            document.getElementById('apa-output').innerHTML = `${author} (${year}). <i>${title}</i>.`;
+            const source = document.getElementById('apa-source').value;
+            
+            let output = "";
+            if (!author || !year || !title) {
+                output = "<span style='color:red'>Please fill in all fields.</span>";
+            } else {
+                if (type === 'journal') {
+                    output = `${author} (${year}). ${title}. <i>${source}</i>.`;
+                } else {
+                    output = `${author} (${year}). <i>${title}</i>. ${source}.`;
+                }
+            }
+            document.getElementById('apa-output').innerHTML = output;
         }
+
+        // 6. QUIZ LOGIC
+        window.submitQuiz = function(id) {
+            // Simplified quiz check for demo
+            const options = document.getElementsByName('q1');
+            let selected;
+            for(let op of options) { if(op.checked) selected = op.value; }
+
+            const resultDiv = document.getElementById('result-' + id);
+            
+            if (selected == 1) { // 1 is correct for Central Limit Theorem
+                resultDiv.innerHTML = "<span class='gold-text'><i class='fas fa-check-circle'></i> Correct! Proficiency verified.</span>";
+            } else {
+                resultDiv.innerHTML = "<span style='color:red'>Incorrect. Try again.</span>";
+            }
+        }
+
+        // 7. CODE PLAYGROUND LOGIC
+        window.runCode = function() {
+            const html = document.getElementById('code-html').value;
+            const css = "<style>" + document.getElementById('code-css').value + "</style>";
+            const frame = document.getElementById('code-preview').contentWindow.document;
+            frame.open();
+            frame.write(html + css);
+            frame.close();
+        }
+        // Initialize preview on load
+        window.onload = function() { runCode(); };
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-       
-       // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBmScX7veRIXzltkJfiN5lZ8dx1Oa7zpss",
-  authDomain: "lrsac-ce9e1.firebaseapp.com",
-  projectId: "lrsac-ce9e1",
-  storageBucket: "lrsac-ce9e1.firebasestorage.app",
-  messagingSenderId: "144680965330",
-  appId: "1:144680965330:web:7644c678d26858b5b1490b",
-  measurementId: "G-187T3EKMBC"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-       
-        // ----------------------------------------
+        // --- YOUR CONFIGURATION ---
+        const firebaseConfig = {
+          apiKey: "AIzaSyBmScX7veRIXzltkJfiN5lZ8dx1Oa7zpss",
+          authDomain: "lrsac-ce9e1.firebaseapp.com",
+          projectId: "lrsac-ce9e1",
+          storageBucket: "lrsac-ce9e1.firebasestorage.app",
+          messagingSenderId: "144680965330",
+          appId: "1:144680965330:web:7644c678d26858b5b1490b",
+          measurementId: "G-187T3EKMBC"
+        };
+        // --------------------------
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -364,7 +493,7 @@ const analytics = getAnalytics(app);
                     <div style="margin-top:20px; text-align:left;">
                         <div class="data-row"><span style="color:#666">Email:</span> <span>${user.email}</span></div>
                         <div class="data-row"><span style="color:#666">Verified:</span> <span>${user.emailVerified ? 'Yes' : 'No'}</span></div>
-                        <div class="data-row"><span style="color:#666">User ID:</span> <span style="font-size:0.8rem">${user.uid}</span></div>
+                        <div class="data-row"><span style="color:#666">User ID:</span> <span style="font-size:0.8rem; font-family:monospace">${user.uid}</span></div>
                     </div>
                 `;
             } else {
@@ -381,4 +510,3 @@ const analytics = getAnalytics(app);
     </script>
 </body>
 </html>
-
