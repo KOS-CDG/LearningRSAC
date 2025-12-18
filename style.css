@@ -1,0 +1,150 @@
+:root {
+    --rolex-green: #006039;
+    --deep-green: #002a1b;
+    --gold: #D4AF37;
+    --gold-light: #F1D475;
+    --silver: #C0C0C0;
+    --black: #050505;
+    --card-bg: rgba(20, 20, 20, 0.8);
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--black);
+    color: #fff;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    /* Smooth Scroll */
+    scroll-behavior: smooth; 
+}
+
+/* --- Typography --- */
+h1, h2, h3 { font-family: var(--font-heading); font-weight: 700; letter-spacing: -0.02em; }
+.gold-text { color: var(--gold); background: linear-gradient(45deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* --- Navigation --- */
+.glass-nav {
+    position: fixed;
+    top: 0; width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 1000;
+    transition: all 0.4s var(--ease);
+}
+
+.logo { font-family: var(--font-heading); font-size: 1.5rem; letter-spacing: 0.1em; font-weight: 700; }
+.logo .dot { color: var(--gold); }
+
+.desktop-tabs { display: flex; gap: 2rem; }
+.nav-btn {
+    background: none; border: none; color: var(--silver);
+    font-family: var(--font-body); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;
+    cursor: pointer; transition: color 0.3s;
+    position: relative;
+}
+.nav-btn::after {
+    content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 1px;
+    background: var(--gold); transition: width 0.3s var(--ease);
+}
+.nav-btn.active, .nav-btn:hover { color: var(--gold); }
+.nav-btn.active::after { width: 100%; }
+
+/* --- Buttons --- */
+.gold-btn-solid {
+    background: linear-gradient(135deg, var(--gold), #b39025);
+    border: none; padding: 0.8rem 2rem; color: #000; font-weight: 600;
+    cursor: pointer; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    transition: transform 0.2s;
+}
+.gold-btn-outline {
+    background: transparent; border: 1px solid var(--gold); color: var(--gold);
+    padding: 0.6rem 1.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.9rem;
+}
+.gold-btn-solid:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+
+/* --- Layouts --- */
+.hidden { display: none !important; }
+
+/* Hero */
+.hero-section {
+    height: 100vh; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 10%; background: radial-gradient(circle at 80% 50%, var(--deep-green) 0%, #000 60%);
+}
+.hero-content h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; }
+.hero-sub { color: var(--silver); margin-bottom: 2rem; font-weight: 300; }
+
+/* Learning Interface (Grid) */
+#learning-interface {
+    display: grid; grid-template-columns: 300px 1fr;
+    height: 100vh; padding-top: 80px; /* Nav offset */
+}
+
+/* Sidebar */
+.sidebar {
+    background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.1);
+    overflow-y: auto; display: flex; flex-direction: column;
+}
+.sidebar-header { padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+.module-item {
+    padding: 1.2rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.02);
+    cursor: pointer; transition: background 0.3s; opacity: 0.7;
+}
+.module-item:hover { opacity: 1; background: rgba(255,255,255,0.02); }
+.module-item.active {
+    opacity: 1; background: linear-gradient(90deg, rgba(0,96,57,0.2), transparent);
+    border-left: 3px solid var(--gold);
+}
+.module-item h4 { font-size: 0.9rem; margin-bottom: 0.2rem; color: #fff; }
+.module-item span { font-size: 0.75rem; color: var(--silver); }
+
+/* Content View */
+.content-view {
+    padding: 3rem 5rem; overflow-y: auto; background: #0e0e0e;
+}
+#content-header { margin-bottom: 3rem; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 1rem; }
+.badge {
+    background: var(--rolex-green); color: #fff; padding: 0.2rem 0.6rem;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; display: inline-block;
+}
+#module-title { font-size: 2.5rem; margin-bottom: 1rem; }
+
+/* Typography Block */
+.typography-block p { line-height: 1.8; color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem; }
+.typography-block h3 { margin-top: 2rem; margin-bottom: 1rem; color: var(--gold); }
+.typography-block code { background: #1a1a1a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--gold-light); font-family: monospace; }
+.code-block { background: #000; border: 1px solid #333; padding: 1.5rem; margin: 1.5rem 0; border-radius: 8px; overflow-x: auto; }
+
+/* Dashboard */
+.dashboard-grid {
+    padding: 120px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+}
+.stat-card {
+    background: var(--card-bg); border: 1px solid #333; padding: 2rem; border-radius: 0px;
+    position: relative;
+}
+.stat-card h3 { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.nft-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 1rem; }
+.nft-badge { width: 60px; height: 60px; background: var(--deep-green); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.2); }
+.full-width { grid-column: span 2; }
+.progress-bar-container { width: 100%; height: 4px; background: #333; margin-top: 1rem; }
+.progress-fill { height: 100%; background: var(--gold); transition: width 1s ease; }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .glass-nav { padding: 1.5rem; }
+    .desktop-tabs { display: none; } /* Use hamburger logic in JS */
+    #learning-interface { grid-template-columns: 1fr; }
+    .sidebar { display: none; } /* Implement slide-out or top-bar for mobile */
+    .content-view { padding: 2rem 1.5rem; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .full-width { grid-column: span 1; }
+}
