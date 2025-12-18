@@ -305,15 +305,27 @@
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
        
-          // --- PASTE YOUR FIREBASE CONFIG HERE ---
+       // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDnm8s9s8...", 
-    authDomain: "learningrsac.firebaseapp.com",
-    projectId: "learningrsac",
-    storageBucket: "learningrsac.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef..."
+  apiKey: "AIzaSyBmScX7veRIXzltkJfiN5lZ8dx1Oa7zpss",
+  authDomain: "lrsac-ce9e1.firebaseapp.com",
+  projectId: "lrsac-ce9e1",
+  storageBucket: "lrsac-ce9e1.firebasestorage.app",
+  messagingSenderId: "144680965330",
+  appId: "1:144680965330:web:7644c678d26858b5b1490b",
+  measurementId: "G-187T3EKMBC"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
        
         // ----------------------------------------
 
@@ -369,4 +381,5 @@ const firebaseConfig = {
     </script>
 </body>
 </html>
+
 
